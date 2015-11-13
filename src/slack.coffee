@@ -315,8 +315,11 @@ class SlackBot extends Adapter
 
     channel.postMessage msg
 
-  typing: (envelope) ->
-    channel = @client.getChannelGroupOrDMByName envelope.room
+  typing: (room) =>
+    channel = @client.getChannelGroupOrDMByName room
+    channel = @client.getChannelGroupOrDMByID(room) unless channel
+    return unless channel
+
     msg = {}
     msg.type = 'typing'
     channel.postMessage msg
