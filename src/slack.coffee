@@ -315,9 +315,10 @@ class SlackBot extends Adapter
 
     channel.postMessage msg
 
-  typing: (room) =>
-    channel = @client.getChannelGroupOrDMByName room
-    channel = @client.getChannelGroupOrDMByID(room) unless channel
+  typing: (data) =>
+    @robot.logger.info "typing: #{data}"
+    channel = @client.getChannelGroupOrDMByName data.room
+    channel = @client.getChannelGroupOrDMByID(data.room) unless channel
     return unless channel
 
     msg = {}
