@@ -44,6 +44,8 @@ class SlackBot extends Adapter
     @robot.on 'slack-attachment', @.customMessage
     @robot.on 'slack.attachment', @.customMessage
 
+    @robot.on 'typing', @.typing
+
     # Start logging in
     @client.login()
 
@@ -311,6 +313,12 @@ class SlackBot extends Adapter
     else
       msg.as_user = true
 
+    channel.postMessage msg
+
+  typing: (envelope) ->
+    channel = @client.getChannelGroupOrDMByName envelope.room
+    msg = {}
+    msg.type = 'typing'
     channel.postMessage msg
 
 # Export class for unit tests
